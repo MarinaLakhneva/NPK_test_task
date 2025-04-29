@@ -5,5 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {outDir: 'build'},
-  base: '/NPK_test_task/'
+  base: '/NPK_test_task/',
+  server: {
+    port: 5151,
+  },
 })
