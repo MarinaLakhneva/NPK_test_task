@@ -1,20 +1,23 @@
 import './App.css'
-import {useState} from "react";
+import {useCallback, useState} from "react";
 import {Modal} from "./components/Modal";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   
+  const handleOpenModal = useCallback(() => {
+    setIsOpen(true);
+  }, []);
   
-  const handleButtonClick = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const handleCloseModal = useCallback(() => {
+    setIsOpen(false);
+  }, []);
   
   return (
     <div className='content'>
       <div className='container_btn'>
-        <button className='btn_download' onClick={handleButtonClick}>Загрузить</button>
-        {isOpen && <Modal isOpen={isOpen} handleClose={handleButtonClick}/>}
+        <button className='btn_download' onClick={handleOpenModal}>Загрузить</button>
+        {isOpen && <Modal handleClose={handleCloseModal}/>}
       </div>
       <div className='container_download_area'>
       

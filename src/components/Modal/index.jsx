@@ -1,11 +1,14 @@
 import './Modal.css';
 import classNames from 'classnames';
-import Close from './assets/close.svg';
+import {useEffect, useState} from "react";
+import {Close} from '../svgCode/Close.jsx';
+
 import Clear from './assets/clear.svg';
 import Dir from './assets/dir.svg';
 import File_1 from './assets/file_1.svg';
 import File_2 from './assets/file_2.svg';
-import {useEffect, useState} from "react";
+
+
 export function Modal({isOpen, handleClose}) {
 	const [offset, setOffset] = useState(0);
 	const [direction, setDirection] = useState(1);
@@ -25,14 +28,28 @@ export function Modal({isOpen, handleClose}) {
 	}, [offset, direction]);
 	
 	
+	const [isTransition, setIsTransition] = useState(false);
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setIsTransition(true);
+		}, 300);
+		
+		return () => clearTimeout(timer);
+	}, []);
+	
+	const closeModal = () => {
+		setIsTransition(false);
+		setTimeout(() => {
+			handleClose();
+		}, 300);
+	};
+	
 	return (
-		<div  className={classNames('blur_back', {['open']: isOpen})}>
+		<div  className={classNames('blur_back', {'open': isTransition})}>
 			<div className='modal'>
 				<div className='modal_container'>
 					<div className='modal_header'>
-						<button className='modal_btn_close' onClick={handleClose}>
-							<img src={Close} alt='close' width={20} height={20}/>
-						</button>
+						<button className='modal_btn_close' onClick={closeModal}><Close/></button>
 					</div>
 					<div className='modal_content'>
 						<div className='modal_content_header'>
@@ -47,7 +64,7 @@ export function Modal({isOpen, handleClose}) {
 								</button>
 							</div>
 							<div className='modal_load_file_block'>
-								<div className='modal_interactive'>
+								<div className='modal_load_file_block_interactive'>
 									<img src={Dir} alt='dir' className='modal_img_dir' />
 									<img
 										src={File_1}
@@ -61,12 +78,9 @@ export function Modal({isOpen, handleClose}) {
 										className='modal_img_file_2'
 										style={{ transform: `translateY(${-offset}px) `}}
 									/>
-									<div className='modal_interactive_blur'></div>
+									<span className='modal_load_file_block_interactive_blur'></span>
 								</div>
-								
-								<div>
-								
-								</div>
+								<p className='modal_load_file_block_description'>Перенесите ваш в файл сюда</p>
 							</div>
 						</div>
 					</div>
