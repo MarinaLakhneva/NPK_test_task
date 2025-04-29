@@ -12,7 +12,20 @@ body {
 }
 
 button {
-  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
   border: none;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
+}
+
+p{
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+input {
+  border: none;
+  outline: none;
 }
