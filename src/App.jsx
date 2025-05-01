@@ -15,13 +15,11 @@ function App() {
   
   return (
     <div className='content'>
-      <div className='container_btn'>
-        <button className='btn_download' onClick={handleOpenModal}>Загрузить</button>
+      <>
+        <button className='btn_open_modal' onClick={handleOpenModal}>Загрузить</button>
         {isOpen && <Modal handleClose={handleCloseModal}/>}
-      </div>
-      <div className='container_download_area'>
-      
-      </div>
+      </>
+      <div className='table'></div>
     </div>
   )
 }

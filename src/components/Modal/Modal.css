@@ -1,4 +1,4 @@
-.blur_back{
+.blur{
 	position: fixed;
 	display: flex;
 	justify-content: center;
@@ -14,7 +14,7 @@
 	z-index: 1000;
 }
 
-.blur_back.open {
+.blur.transition {
 	opacity: 1;
 	transition: opacity 400ms linear 1ms, transform 400ms linear 1ms;
 }
@@ -35,7 +35,17 @@
 	padding: 14px 12.5px;
 	height: 100%;
 	border-radius: 22px;
-	background: linear-gradient(to bottom, rgba(95, 92, 240, 1), rgba(221, 220, 252, 1));
+	transition: background-color 0.4s ease;
+}
+
+.modal_container_success{
+	background: linear-gradient(to bottom, #5F5CF0, #DDDCFC); /*не работает плавность из-за linear-gradient*/
+	transition: opacity 400ms linear 1ms, transform 400ms linear 1ms;
+}
+
+.modal_container_error{
+	background: linear-gradient(to bottom, #F05C5C, #8F8DF4); /*не работает плавность из-за linear-gradient*/
+	transition: opacity 400ms linear 1ms, transform 400ms linear 1ms;
 }
 
 .modal_header{
@@ -43,7 +53,7 @@
 	justify-content: flex-end;
 }
 
-.modal_btn_close{
+.btn_close{
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -56,11 +66,11 @@
 	transition: all ease-out 0.6s;
 }
 
-.modal_btn_close:hover{
+.btn_close:hover{
 	background-color: #F1F1F1;
 }
 
-.modal_btn_close:hover svg path {
+.btn_close:hover svg path {
 	fill: #5F5CF0;
 }
 
@@ -84,14 +94,32 @@
 	color: #ffffff;
 }
 
+.modal_description_container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 3px;
+}
+
+.modal_title_error{
+	font-weight: 400;
+	font-size: 14px;
+	color: #ffffff;
+}
+
 .modal_description{
 	font-weight: 300;
 	font-size: 14px;
 	color: #ffffff;
 }
 
-.modal_options{
+.modal_content_content{
 	margin-top: 26.33px;
+}
+
+.modal_content_content_error{
+	margin-top: 6.33px;
 }
 
 .modal_input_container{
@@ -118,11 +146,7 @@
 	border: 1px solid #5F5CF0;
 }
 
-.modal_input.modal_input_hover {
-	background-color: #BBB9D2;
-}
-
-.modal_input{
+.input_name_file{
 	background-color: #F1F1F1;
 	font-weight: 500;
 	font-size: 17.5px;
@@ -130,13 +154,17 @@
 	transition: background-color 0.3s ease;
 }
 
-.modal_input::placeholder {
+.input_name_file::placeholder {
 	font-weight: 500;
 	font-size: 17.5px;
 	color: #A5A5A5;
 }
 
-.modal_btn_clear{
+.input_name_file.input_name_file_hover {
+	background-color: #BBB9D2;
+}
+
+.btn_clear{
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -144,15 +172,15 @@
 	cursor: auto;
 }
 
-.modal_btn_clear:hover{
+.btn_clear:hover{
 	background-color: #F1F1F1;
 }
 
-.modal_btn_clear_active{
+.btn_clear_active{
 	cursor: pointer;
 }
 
-.modal_btn_clear_active svg path {
+.btn_clear_active svg path {
 	fill: #5F5CF0;
 }
 
@@ -165,12 +193,19 @@
 	width: 100%;
 }
 
-.modal_btn_download{
+.btn_download{
 	padding: 16px 88px;
 	box-sizing: border-box;
 	height: 56px;
 	width: 100%;
 	border-radius: 30px;
-	background-color: #BBB9D2;
+	background: #BBB9D2;
 	color: #ffffff;
+	transition: background-color 400ms ease;
+	cursor: auto;
+}
+
+.btn_download_active{
+	background: #5F5CF0;
+	cursor: pointer;
 }

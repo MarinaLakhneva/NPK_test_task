@@ -1,4 +1,5 @@
 import './CsvDropzone.css';
+import classNames from "classnames";
 import React, {useEffect, useState} from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -11,13 +12,12 @@ const initial = {
 	size: 0,
 	date: ''
 }
-const CsvDropzone = () => {
+const CsvDropzone = ({onChangeError, onFileUpload }) => {
 	const [offset, setOffset] = useState(0);
 	const [direction, setDirection] = useState(1);
-	
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setOffset(prevOffset => prevOffset + direction * 1);
+			setOffset(prevOffset => prevOffset + direction);
 			
 			if (offset >= 1) {
 				setDirection(-1);
@@ -31,31 +31,46 @@ const CsvDropzone = () => {
 	
 	
 	const [fileInformation, setFileInformation] = useState(initial);
-	const [status, setStatus] = useState(false);
+	const [nextStep, setNextStep] = useState(false);
+	
+	const [isTransition, setIsTransition] = useState(false);
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			if(nextStep){
+				setIsTransition(true);
+			}
+			else {
+				setIsTransition(false);
+			}
+			
+		}, 300);
+		
+		return () => clearTimeout(timer);
+	}, [nextStep]);
 	
 	const onDrop = (acceptedFiles, rejectedFiles) => {
 		if (acceptedFiles.length > 0) {
 			acceptedFiles.forEach((file) => {
 				if (file.size > 1073741824) {
-					alert(`Файл ${file.name} слишком большой. Максимальный размер - 1 ГБ.`);
+					onChangeError(true, 'Размер файла не должен превышать 1ГБ');
 				} else {
+					onChangeError(false, '');
 					setFileInformation({
 						name: file.name,
 						size: file.size,
-						date: new Date(file.lastModified)
+						date: new Date(file.lastModified).toLocaleDateString("en-US")
 					});
-					setStatus(true);
+					setNextStep(true);
+					onFileUpload(file);
 				}
 			});
 		}
 		
 		if (rejectedFiles.length > 0) {
-			rejectedFiles.forEach((file) => {
-				setStatus(false);
-				console.error('Ошибка загрузки файла:', file.name);
-				console.error('Причина:', file.errors.map(error => error.message).join(', '));
+			rejectedFiles.forEach(() => {
+				setNextStep(false);
+				onChangeError(true, 'Неправильный формат файла');
 			});
-			alert('Ошибка: Загрузите файл в формате .csv!');
 		}
 	};
 	
@@ -65,43 +80,43 @@ const CsvDropzone = () => {
 	});
 	
 	return (
-		<div {...getRootProps({ className: 'modal_load_file_block' })}>
-			{!status ?
+		<div {...getRootProps({ className: 'load_file_block' })}>
+			{!nextStep ?
 			<>
 				<input {...getInputProps()} />
-				<div className='modal_load_file_block_interactive'>
-					<img src={Dir} alt='dir' className='modal_img_dir' />
+				<div className='load_file_block_animation'>
+					<img src={Dir} alt='dir' className='img_dir' />
 					<img
 						src={File_1}
 						alt='file'
-						className='modal_img_file_1'
+						className='img_file_1'
 						style={{ transform: `translateY(${offset}px)` }}
 					/>
 					<img
 						src={File_2}
 						alt='file'
-						className='modal_img_file_2'
+						className='img_file_2'
 						style={{ transform: `translateY(${-offset}px)` }}
 					/>
-					<span className='modal_load_file_block_interactive_blur'></span>
+					<span className='load_file_block_animation_blur'></span>
 				</div>
-				<p className='modal_load_file_block_description'>
+				<p className='load_file_block_animation_description'>
 					{isDragActive ? 'Да-да, все так, пускай!' : 'Перенесите ваш файл сюда'}
 				</p>
 			</>
 			:
-			<div className='modal_load_file_block_success'>
-				<p className='modal_load_file_block_title'>Успешно добавлен</p>
-				<div className='modal_load_file_block_description_container_1'>
-					<p className='modal_load_file_block_description_1'>{fileInformation.name}</p>
-					<div className='modal_load_file_block_description_container_2'>
-						<div className='modal_load_file_block_description_container_3'>
-							<p className='modal_load_file_block_description_2'>Размер файла:</p>
-							<p className='modal_load_file_block_description_2'>{fileInformation.size} байт</p>
+			<div className={classNames('load_file_block_success', {'load_file_block_success_transition': isTransition})}>
+				<p className='load_file_block_title'>Успешно добавлен</p>
+				<div className='load_file_block_description'>
+					<p className='load_file_block_file_name'>{fileInformation.name}</p>
+					<div className='load_file_block_description_container'>
+						<div className='load_file_block_description_container_'>
+							<p className='load_file_block_description_title'>Размер файла:</p>
+							<p className='load_file_block_description_value'>{fileInformation.size}B</p>
 						</div>
-						<div className='modal_load_file_block_description_container_3'>
-							<p className='modal_load_file_block_description_2'>Дата изменения:</p>
-							<p className='modal_load_file_block_description_2'>{fileInformation.date.toLocaleDateString("en-US")}</p>
+						<div className='load_file_block_description_container_'>
+							<p className='load_file_block_description_title'>Дата изменения:</p>
+							<p className='load_file_block_description_value'>{fileInformation.date}</p>
 						</div>
 					</div>
 				</div>
