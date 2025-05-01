@@ -61,7 +61,7 @@ const CsvDropzone = ({onChangeError, onFileUpload }) => {
 						date: new Date(file.lastModified).toLocaleDateString("en-US")
 					});
 					setNextStep(true);
-					onFileUpload(file);
+					onFileUpload(file, file.name);
 				}
 			});
 		}

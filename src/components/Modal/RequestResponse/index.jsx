@@ -1,11 +1,10 @@
 import './RequestResponse.css';
 import '../Modal.css';
 
-export function RequestResponse({dataFile, errorMsg}) {
+export function RequestResponse({dataFile, filename, errorMsg}) {
 	const date = new Date(dataFile.timestamp);
 	const timestamp = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}
 														${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
-	const filename = dataFile.filename.split('_').slice(2).join('_');
 	
 	return (
 		<div className='modal_content'>

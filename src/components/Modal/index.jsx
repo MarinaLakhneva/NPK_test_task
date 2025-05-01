@@ -15,9 +15,10 @@ export function Modal({handleClose}) {
 	const [isHovered, setIsHovered] = useState(false);
 	
 	const [file, setFile] = useState(null);
-	const [nameFile, setNameFile] = useState('');
+	const [fileName, setFileName] = useState('');
+	const [name, setName] = useState('');
 	const handleClear = () => {
-		setNameFile('');
+		setName('');
 	};
 	
 	const [isTransition, setIsTransition] = useState(false);
@@ -47,8 +48,9 @@ export function Modal({handleClose}) {
 		}, 400);
 	};
 	
-	const handleFileUpload = (file) => {
+	const handleFileUpload = (file, fileName) => {
 		setFile(file);
+		setFileName(fileName);
 	};
 	
 	const [isRequestResponse, setIsRequestResponse] = useState(false);
@@ -57,7 +59,7 @@ export function Modal({handleClose}) {
 		setIsRequestResponse(true);
 		setLoading(true);
 		try {
-			const data = await uploadFile(file, nameFile);
+			const data = await uploadFile(file, name);
 			setDataFile(data);
 		} catch (err) {
 			if (err.status && err.message) {
@@ -78,7 +80,7 @@ export function Modal({handleClose}) {
 			return <Loading/>;
 		}
 		if(isRequestResponse){
-			return <RequestResponse dataFile={dataFile} errorMsg={errorMsg}/>
+			return <RequestResponse dataFile={dataFile} filename={fileName} errorMsg={errorMsg}/>
 		}
 		
 		return(
@@ -98,21 +100,21 @@ export function Modal({handleClose}) {
 					<div className={classNames('modal_content_content', {'modal_content_content_error': error})}>
 						<div className={classNames(
 							'modal_input_container',
-							{'modal_input_container_hover': isHovered && nameFile !== ''},
-							{'modal_input_container_active': nameFile !== ''})}
+							{'modal_input_container_hover': isHovered && name !== ''},
+							{'modal_input_container_active': name !== ''})}
 						>
 							<input
 								className={classNames(
 									'input_name_file',
-									{'input_name_file_hover': isHovered && nameFile !== ''},)}
+									{'input_name_file_hover': isHovered && name !== ''},)}
 								placeholder='Название файла'
-								value={nameFile}
-								onChange={(e) => (setNameFile(e.target.value))}
+								value={name}
+								onChange={(e) => (setName(e.target.value))}
 							/>
 							<button
 								className={classNames(
 									'btn_clear',
-									{'btn_clear_active': nameFile !== ''})}
+									{'btn_clear_active': name !== ''})}
 								onMouseEnter={() => setIsHovered(true)}
 								onMouseLeave={() => setIsHovered(false)}
 								onClick={handleClear}
@@ -127,9 +129,9 @@ export function Modal({handleClose}) {
 					<button
 						className={classNames(
 							'btn_download',
-							{'btn_download_active': file && nameFile})}
+							{'btn_download_active': file && name})}
 						onClick={handleSubmit}
-						disabled={file === null || nameFile === ''}
+						disabled={file === null || name === ''}
 					>
 						Загрузить
 					</button>
