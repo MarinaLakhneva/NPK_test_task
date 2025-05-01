@@ -1,0 +1,19 @@
+.modal_content_content_loading{
+	display: flex;
+	justify-content: center;
+	margin-top: 41px;
+}
+
+.rotating {
+	animation: rotate 2s linear infinite;
+	transform-origin: center;
+}
+
+@keyframes rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

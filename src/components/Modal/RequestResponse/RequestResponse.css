@@ -1,0 +1,14 @@
+.modal_content_content_request_response{
+	padding: 10px 8px 0 8px;
+	box-sizing: border-box;
+}
+
+.request_response{
+	margin-top: 11px;
+}
+
+.request_response_description{
+	font-weight: 300;
+	font-size: 14px;
+	color: #ffffff;
+}

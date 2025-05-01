@@ -112,7 +112,7 @@ const CsvDropzone = ({onChangeError, onFileUpload }) => {
 					<div className='load_file_block_description_container'>
 						<div className='load_file_block_description_container_'>
 							<p className='load_file_block_description_title'>Размер файла:</p>
-							<p className='load_file_block_description_value'>{fileInformation.size}B</p>
+							<p className='load_file_block_description_value'>{fileInformation.size}б</p>
 						</div>
 						<div className='load_file_block_description_container_'>
 							<p className='load_file_block_description_title'>Дата изменения:</p>

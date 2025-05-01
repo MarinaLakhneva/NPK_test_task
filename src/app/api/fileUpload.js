@@ -10,13 +10,19 @@ export const uploadFile = async (file, name) => {
 		});
 		
 		if (!response.ok) {
-			throw new Error('Ошибка загрузки файла');
+			const errorData = await response.json();
+			throw new Error(JSON.stringify({
+				status: response.status,
+				message: errorData.message || 'Ошибка загрузки файла'
+			}));
 		}
 		
 		const data = await response.json();
-		return data.message;
+		return data;
 	} catch (error) {
-		throw new Error('Ошибка загрузки файла');
+		const { status, message } = JSON.parse(error.message);
+		return { status, message };
 	}
 };
+
 

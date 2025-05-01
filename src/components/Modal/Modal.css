@@ -28,6 +28,11 @@
 	height: 549px;
 	border-radius: 20px;
 	background-color: rgba(204, 204, 206, 0.28);
+	transition: all ease 400ms;
+}
+
+.modal_request{
+	height: 264px;
 }
 
 .modal_container{
@@ -35,17 +40,18 @@
 	padding: 14px 12.5px;
 	height: 100%;
 	border-radius: 22px;
-	transition: background-color 0.4s ease;
+	background: linear-gradient(to bottom, #5F5CF0, #DDDCFC);
+	transition: background-color 400ms linear 1ms, transform 400ms linear 1ms;
 }
 
 .modal_container_success{
-	background: linear-gradient(to bottom, #5F5CF0, #DDDCFC); /*не работает плавность из-за linear-gradient*/
-	transition: opacity 400ms linear 1ms, transform 400ms linear 1ms;
+	background: linear-gradient(to bottom, #5F5CF0, #8F8DF4); /*не работает плавность из-за linear-gradient*/
+	transition: background-color 400ms linear 1ms, transform 400ms linear 1ms;
 }
 
 .modal_container_error{
 	background: linear-gradient(to bottom, #F05C5C, #8F8DF4); /*не работает плавность из-за linear-gradient*/
-	transition: opacity 400ms linear 1ms, transform 400ms linear 1ms;
+	transition: background-color 400ms linear 1ms, transform 400ms linear 1ms;
 }
 
 .modal_header{
