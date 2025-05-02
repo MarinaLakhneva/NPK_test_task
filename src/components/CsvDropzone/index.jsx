@@ -4,8 +4,8 @@ import React, {useEffect, useState} from 'react';
 import { useDropzone } from 'react-dropzone';
 
 import Dir from './assets/dir.svg';
-import File_1 from './assets/file_1.svg';
-import File_2 from './assets/file_2.svg';
+import File_back from './assets/file_back.svg';
+import File_front from './assets/file_front.svg';
 
 const initial = {
 	name: '',
@@ -31,22 +31,21 @@ const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 	
 	
 	const [fileInformation, setFileInformation] = useState(initial);
-	const [nextStep, setNextStep] = useState(false);
+	const [isFileUpload, setIsFileUpload] = useState(false);
 	
 	const [isTransition, setIsTransition] = useState(false);
 	useEffect(() => {
 		const timer = setTimeout(() => {
-			if(nextStep){
+			if(isFileUpload){
 				setIsTransition(true);
 			}
 			else {
 				setIsTransition(false);
 			}
-			
 		}, 300);
 		
 		return () => clearTimeout(timer);
-	}, [nextStep]);
+	}, [isFileUpload]);
 	
 	const onDrop = (acceptedFiles, rejectedFiles) => {
 		if (acceptedFiles.length > 0) {
@@ -60,7 +59,7 @@ const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 						size: file.size,
 						lastModified: new Date(file.lastModified).toLocaleDateString("en-US")
 					});
-					setNextStep(true);
+					setIsFileUpload(true);
 					handleFileUpload(file, file.name);
 				}
 			});
@@ -68,7 +67,7 @@ const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 		
 		if (rejectedFiles.length > 0) {
 			rejectedFiles.forEach(() => {
-				setNextStep(false);
+				setIsFileUpload(false);
 				onChangeError(true, 'Неправильный формат файла');
 			});
 		}
@@ -80,43 +79,43 @@ const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 	});
 	
 	return (
-		<div {...getRootProps({ className: 'load_file_block' })}>
-			{!nextStep ?
+		<div {...getRootProps({ className: 'block_uploading_file' })}>
+			{!isFileUpload ?
 			<>
 				<input {...getInputProps()} />
-				<div className='load_file_block_animation'>
+				<div className='animation_container'>
 					<img src={Dir} alt='dir' className='img_dir' />
 					<img
-						src={File_1}
+						src={File_back}
 						alt='file'
-						className='img_file_1'
+						className='img_back'
 						style={{ transform: `translateY(${offset}px)` }}
 					/>
 					<img
-						src={File_2}
+						src={File_front}
 						alt='file'
-						className='img_file_2'
+						className='img_front'
 						style={{ transform: `translateY(${-offset}px)` }}
 					/>
-					<span className='load_file_block_animation_blur'></span>
+					<span className='animation_blur'></span>
 				</div>
-				<p className='load_file_block_animation_description'>
+				<p className='animation_description'>
 					{isDragActive ? 'Да-да, все так, пускай!' : 'Перенесите ваш файл сюда'}
 				</p>
 			</>
 			:
-			<div className={classNames('load_file_block_success', {'load_file_block_success_transition': isTransition})}>
-				<p className='load_file_block_title'>Успешно добавлен</p>
-				<div className='load_file_block_description'>
-					<p className='load_file_block_file_name'>{fileInformation.name}</p>
-					<div className='load_file_block_description_container'>
-						<div className='load_file_block_description_container_'>
-							<p className='load_file_block_description_title'>Размер файла:</p>
-							<p className='load_file_block_description_value'>{fileInformation.size}б</p>
+			<div className={classNames('file_uploaded', {'file_uploaded_transition': isTransition})}>
+				<p className='file_uploaded_title'>Успешно добавлен</p>
+				<div className='file_uploaded_container'>
+					<p className='file_uploaded_name'>{fileInformation.name}</p>
+					<div className='file_uploaded_description'>
+						<div className='file_uploaded_description_'>
+							<p className='file_uploaded_description_title'>Размер файла:</p>
+							<p className='file_uploaded_description_value'>{fileInformation.size}б</p>
 						</div>
-						<div className='load_file_block_description_container_'>
-							<p className='load_file_block_description_title'>Дата изменения:</p>
-							<p className='load_file_block_description_value'>{fileInformation.lastModified}</p>
+						<div className='file_uploaded_description_'>
+							<p className='file_uploaded_description_title'>Дата изменения:</p>
+							<p className='file_uploaded_description_value'>{fileInformation.lastModified}</p>
 						</div>
 					</div>
 				</div>

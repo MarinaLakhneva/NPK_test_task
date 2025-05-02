@@ -5,8 +5,9 @@ import {useCallback, useEffect, useState} from "react";
 import {uploadFile} from '../../app/api/fileUpload';
 
 import CsvDropzone from '../CsvDropzone';
-import {Loading} from './Loading';
-import {RequestResponse} from './RequestResponse';
+
+import Loading from './Loading';
+import RequestResponse from './RequestResponse';
 
 import {Close} from '../../assets/svgCode/Close';
 import {Clear} from '../../assets/svgCode/Clear';
@@ -91,7 +92,7 @@ export function Modal({handleClose}) {
 			return (
 				<GenerateContent
 					modalTitle={!error ? 'Файл успешно загружен' : 'Ошибка в загрузке файла'}
-					content={<RequestResponse dataFile={dataFile} filename={fileName} errorMsg={errorMsg}/>}
+					content={<RequestResponse dataFile={dataFile} filename={fileName} error={error} errorMsg={errorMsg}/>}
 				/>
 			);
 		}

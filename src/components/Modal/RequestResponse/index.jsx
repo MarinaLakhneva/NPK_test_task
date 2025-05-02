@@ -1,26 +1,43 @@
+import React from 'react';
 import './RequestResponse.css';
 
-export function RequestResponse({dataFile, filename, errorMsg}) {
-	const date = new Date(dataFile.timestamp);
-	const timestamp = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}
-														${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+class RequestResponse extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			timestamp: this.formatTimestamp(props.dataFile.timestamp),
+		};
+	}
 	
-	return (
-				errorMsg === '' ?
-					<div className='modal_content_content_request_response'>
+	formatTimestamp(timestamp) {
+		const date = new Date(timestamp);
+		return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}
+						${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}:${String(date.getSeconds()).padStart(2, '0')}`;
+	}
+	
+	render() {
+		const { dataFile, filename, error, errorMsg } = this.props;
+		
+		return (
+			<div className='modal_content_content_request_response'>
+				{error ? (
+					<div className='request_response'>
+						<p className='request_response_description'>{errorMsg}</p>
+					</div>
+				) : (
+					<>
 						<p className='request_response_description'>filename:</p>
 						<p className='request_response_description'>{filename}</p>
 						<div className='request_response'>
 							<p className='request_response_description'>name: {dataFile.name}</p>
-							<p className='request_response_description'>timestamp: {timestamp}</p>
+							<p className='request_response_description'>timestamp: {this.state.timestamp}</p>
 							<p className='request_response_description'>message: {dataFile.message}</p>
 						</div>
-					</div>
-					:
-					<div className='modal_content_content_request_response'>
-						<div className='request_response'>
-							<p className='request_response_description'>{errorMsg}</p>
-						</div>
-					</div>
-	)
+					</>
+				)}
+			</div>
+		);
+	}
 }
+
+export default RequestResponse;

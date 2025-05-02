@@ -1,4 +1,4 @@
-.load_file_block{
+.block_uploading_file{
 	margin-top: 26.33px;
 	padding: 39px 29px 31.24px 27px;
 	box-sizing: border-box;
@@ -9,7 +9,7 @@
 	background-color: rgba(255, 255, 255, 0.4);
 }
 
-.load_file_block_animation{
+.animation_container{
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -20,19 +20,19 @@
 	position: absolute;
 }
 
-.img_file_1{
+.img_back{
 	position: absolute;
 	left: 40px;
 	top: 24px;
 }
 
-.img_file_2{
+.img_front{
 	position: absolute;
 	right: 40px;
 	top: 22px;
 }
 
-.load_file_block_animation_blur{
+.animation_blur{
 	position: absolute;
 	margin-top: 41px;
 	width: 170.84px;
@@ -44,7 +44,7 @@
 	z-index: 1;
 }
 
-.load_file_block_animation_description{
+.animation_description{
 	display: flex;
 	justify-content: center;
 	margin-top: 140px;
@@ -53,7 +53,7 @@
 	color: #5F5CF0;
 }
 
-.load_file_block_success{
+.file_uploaded{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -61,11 +61,11 @@
 	transition: opacity 400ms ease;
 }
 
-.load_file_block_success_transition{
+.file_uploaded_transition{
 	opacity: 1;
 }
 
-.load_file_block_title{
+.file_uploaded_title{
 	display: flex;
 	justify-content: center;
 	font-weight: 600;
@@ -73,7 +73,7 @@
 	color: #5F5CF0;
 }
 
-.load_file_block_description{
+.file_uploaded_container{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -84,31 +84,31 @@
 	gap: 9px;
 }
 
-.load_file_block_file_name{
+.file_uploaded_name{
 	font-weight: 500;
 	font-size: 12px;
 	color: #5F5CF0;
 }
 
-.load_file_block_description_container{
+.file_uploaded_description{
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
 }
 
-.load_file_block_description_container_{
+.file_uploaded_description_{
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 }
 
-.load_file_block_description_title{
+.file_uploaded_description_title{
 	font-weight: 400;
 	font-size: 12px;
 	color: #5F5CF0;
 }
 
-.load_file_block_description_value{
+.file_uploaded_description_value{
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
