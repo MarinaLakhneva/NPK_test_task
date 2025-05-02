@@ -1,5 +1,5 @@
 import React from 'react';
-import './RequestResponse.css';
+import styles from './RequestResponse.module.css';
 
 class RequestResponse extends React.Component {
 	constructor(props) {
@@ -19,19 +19,19 @@ class RequestResponse extends React.Component {
 		const { dataFile, filename, error, errorMsg } = this.props;
 		
 		return (
-			<div className='modal_content_content_request_response'>
+			<div className={styles.modal_content_request_response}>
 				{error ? (
-					<div className='request_response'>
-						<p className='request_response_description'>{errorMsg}</p>
+					<div className={styles.request_response}>
+						<p className={styles.request_response_description}>{errorMsg}</p>
 					</div>
 				) : (
 					<>
-						<p className='request_response_description'>filename:</p>
-						<p className='request_response_description'>{filename}</p>
-						<div className='request_response'>
-							<p className='request_response_description'>name: {dataFile.name}</p>
-							<p className='request_response_description'>timestamp: {this.state.timestamp}</p>
-							<p className='request_response_description'>message: {dataFile.message}</p>
+						<p className={styles.request_response_description}>filename:</p>
+						<p className={styles.request_response_description}>{filename}</p>
+						<div className={styles.request_response}>
+							<p className={styles.request_response_description}>name: {dataFile.name}</p>
+							<p className={styles.request_response_description}>timestamp: {this.state.timestamp}</p>
+							<p className={styles.request_response_description}>message: {dataFile.message}</p>
 						</div>
 					</>
 				)}

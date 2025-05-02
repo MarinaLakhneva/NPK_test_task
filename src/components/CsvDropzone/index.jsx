@@ -1,5 +1,5 @@
-import './CsvDropzone.css';
-import classNames from "classnames";
+import styles from './CsvDropzone.module.css';
+import classNames from 'classnames';
 import React, {useEffect, useState} from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -54,10 +54,12 @@ const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 					onChangeError(true, 'Размер файла не должен превышать 1ГБ');
 				} else {
 					onChangeError(false, '');
+					const date = new Date(file.lastModified);
+					const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
 					setFileInformation({
 						name: file.name,
 						size: file.size,
-						lastModified: new Date(file.lastModified).toLocaleDateString("en-US")
+						lastModified: formattedDate
 					});
 					setIsFileUpload(true);
 					handleFileUpload(file, file.name);
@@ -79,43 +81,43 @@ const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 	});
 	
 	return (
-		<div {...getRootProps({ className: 'block_uploading_file' })}>
+		<div {...getRootProps({ className: styles.block_uploading_file })}>
 			{!isFileUpload ?
 			<>
 				<input {...getInputProps()} />
-				<div className='animation_container'>
-					<img src={Dir} alt='dir' className='img_dir' />
+				<div className={styles.animation_container}>
+					<img src={Dir} alt='dir' className={styles.img_dir} />
 					<img
 						src={File_back}
 						alt='file'
-						className='img_back'
+						className={styles.img_back}
 						style={{ transform: `translateY(${offset}px)` }}
 					/>
 					<img
 						src={File_front}
 						alt='file'
-						className='img_front'
+						className={styles.img_front}
 						style={{ transform: `translateY(${-offset}px)` }}
 					/>
-					<span className='animation_blur'></span>
+					<span className={styles.animation_blur}></span>
 				</div>
-				<p className='animation_description'>
+				<p className={styles.animation_description}>
 					{isDragActive ? 'Да-да, все так, пускай!' : 'Перенесите ваш файл сюда'}
 				</p>
 			</>
 			:
-			<div className={classNames('file_uploaded', {'file_uploaded_transition': isTransition})}>
-				<p className='file_uploaded_title'>Успешно добавлен</p>
-				<div className='file_uploaded_container'>
-					<p className='file_uploaded_name'>{fileInformation.name}</p>
-					<div className='file_uploaded_description'>
-						<div className='file_uploaded_description_'>
-							<p className='file_uploaded_description_title'>Размер файла:</p>
-							<p className='file_uploaded_description_value'>{fileInformation.size}б</p>
+			<div className={classNames(styles.file_uploaded, {[styles.file_uploaded_transition]: isTransition})}>
+				<p className={styles.file_uploaded_title}>Успешно добавлен</p>
+				<div className={styles.file_uploaded_container}>
+					<p className={styles.file_uploaded_name}>{fileInformation.name}</p>
+					<div className={styles.file_uploaded_description}>
+						<div className={styles.file_uploaded_description_container}>
+							<p className={styles.file_uploaded_description_title}>Размер файла:</p>
+							<p className={styles.file_uploaded_description_value}>{fileInformation.size}б</p>
 						</div>
-						<div className='file_uploaded_description_'>
-							<p className='file_uploaded_description_title'>Дата изменения:</p>
-							<p className='file_uploaded_description_value'>{fileInformation.lastModified}</p>
+						<div className={styles.file_uploaded_description_container}>
+							<p className={styles.file_uploaded_description_title}>Дата изменения:</p>
+							<p className={styles.file_uploaded_description_value}>{fileInformation.lastModified}</p>
 						</div>
 					</div>
 				</div>

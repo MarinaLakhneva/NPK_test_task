@@ -1,6 +1,6 @@
-import './Modal.css';
+import styles from './Modal.module.css';
 import classNames from 'classnames';
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from 'react';
 
 import {uploadFile} from '../../app/api/fileUpload';
 
@@ -75,9 +75,9 @@ export function Modal({handleClose}) {
 	
 	function GenerateContent({modalTitle, content}) {
 		return(
-			<div className={classNames('modal_content', {'modal_content_response': isRequestResponse})}>
-				<div className='modal_content_header'>
-					<p className='modal_title'>{modalTitle}</p>
+			<div className={classNames(styles.modal_content, {[styles.modal_content_response]: isRequestResponse})}>
+				<div className={styles.modal_content_header}>
+					<p className={styles.modal_title}>{modalTitle}</p>
 				</div>
 				{content}
 			</div>
@@ -99,36 +99,36 @@ export function Modal({handleClose}) {
 		
 		return(
 			<>
-				<div className='modal_content'>
-					<div className='modal_content_header'>
-						<p className='modal_title'>Загрузочное окно</p>
+				<div className={styles.modal_content}>
+					<div className={styles.modal_content_header}>
+						<p className={styles.modal_title}>Загрузочное окно</p>
 						{error ?
-							<div className='modal_description_container'>
-								<p className='modal_title_error'>Ошибка при добавлении:</p>
-								<p className='modal_description'>{errorMsg}</p>
+							<div className={styles.modal_description_container}>
+								<p className={styles.modal_title_error}>Ошибка при добавлении:</p>
+								<p className={styles.modal_description}>{errorMsg}</p>
 							</div>
 							:
-							<p className='modal_description'>Перед загрузкой дайте имя файлу</p>
+							<p className={styles.modal_description}>Перед загрузкой дайте имя файлу</p>
 						}
 					</div>
-					<div className={classNames('modal_content_content', {'modal_content_content_error': error})}>
+					<div className={classNames(styles.modal_content_content, {[styles.modal_content_content_error]: error})}>
 						<div className={classNames(
-							'modal_input_container',
-							{'modal_input_container_hover': isHovered && name !== ''},
-							{'modal_input_container_active': name !== ''})}
+							styles.modal_input_container,
+							{[styles.modal_input_container_hover]: isHovered && name !== ''},
+							{[styles.modal_input_container_active]: name !== ''})}
 						>
 							<input
 								className={classNames(
-									'input_name_file',
-									{'input_name_file_hover': isHovered && name !== ''},)}
+									styles.input_name_file,
+									{[styles.input_name_file_hover]: isHovered && name !== ''},)}
 								placeholder='Название файла'
 								value={name}
 								onChange={(e) => (setName(e.target.value))}
 							/>
 							<button
 								className={classNames(
-									'btn_clear',
-									{'btn_clear_active': name !== ''})}
+									styles.btn_clear,
+									{[styles.btn_clear_active]: name !== ''})}
 								onMouseEnter={() => setIsHovered(true)}
 								onMouseLeave={() => setIsHovered(false)}
 								onClick={handleClear}
@@ -139,11 +139,11 @@ export function Modal({handleClose}) {
 						<CsvDropzone onChangeError={onChangeError} handleFileUpload={handleFileUpload}/>
 					</div>
 				</div>
-				<div className='modal_footer'>
+				<div className={styles.modal_footer}>
 					<button
 						className={classNames(
-							'btn_download',
-							{'btn_download_active': file && name})}
+							styles.btn_download,
+							{[styles.btn_download_active]: file && name})}
 						onClick={handleSubmit}
 						disabled={file === null || name === ''}
 					>
@@ -156,21 +156,27 @@ export function Modal({handleClose}) {
 	
 	return (
 		<div  className={classNames(
-			'background_blur',
-			{'transition': isTransition})}
+			styles.background_blur,
+			{[styles.transition]: isTransition})}
 		>
 			<div className={classNames(
-				'modal',
-				{'modal_request': isRequestResponse})}
+				styles.modal,
+				{[styles.modal_request]: isRequestResponse})}
 			>
-				<div className='modal_container'>
-					<div className='modal_background'>
-						<div className={`background_color_default ${error && 'active_default'}`}></div>
-						<div className={`background_color_error ${error && 'active_error'}`}></div>
-						<div className={`background_color_success ${isRequestResponse && !error && !loading && 'active_success'}`}></div>
+				<div className={styles.modal_container}>
+					<div className={styles.modal_background}>
+						<div className={classNames(
+							styles.background_color_default,
+							{[styles.active_default]: error })}></div>
+						<div className={classNames(
+							styles.background_color_error,
+							{[styles.active_error]: error })}></div>
+						<div className={classNames(
+							styles.background_color_success,
+							{[styles.active_success]: isRequestResponse && !error && !loading })}></div>
 					</div>
-					<div className='modal_header'>
-						<button className='btn_close' onClick={closeModal}><Close/></button>
+					<div className={styles.modal_header}>
+						<button className={styles.btn_close} onClick={closeModal}><Close/></button>
 					</div>
 					{content()}
 				</div>

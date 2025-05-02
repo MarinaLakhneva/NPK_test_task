@@ -1,10 +1,10 @@
-.modal_content_content_loading{
+.modal_content_loading{
 	display: flex;
 	justify-content: center;
 	margin-top: 41px;
 }
 
-.rotating {
+.throbber {
 	animation: rotate 2s linear infinite;
 	transform-origin: center;
 }

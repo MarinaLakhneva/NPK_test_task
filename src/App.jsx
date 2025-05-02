@@ -1,6 +1,6 @@
-import './App.css'
-import {useCallback, useState} from "react";
-import {Modal} from "./components/Modal";
+import styles from './App.module.css'
+import {useCallback, useState} from 'react';
+import {Modal} from './components/Modal';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,12 +14,12 @@ function App() {
   }, []);
   
   return (
-    <div className='content'>
+    <div className={styles.content}>
       <>
-        <button className='btn_open_modal' onClick={handleOpenModal}>Загрузить</button>
+        <button className={styles.btn_open_modal} onClick={handleOpenModal}>Загрузить</button>
         {isOpen && <Modal handleClose={handleCloseModal}/>}
       </>
-      <div className='table'></div>
+      <div className={styles.table}></div>
     </div>
   )
 }
