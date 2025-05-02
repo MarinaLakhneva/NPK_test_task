@@ -1,26 +1,18 @@
 import './Modal.css';
 import classNames from 'classnames';
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 import {uploadFile} from '../../app/api/fileUpload';
-import CsvDropzone from '../../components/CsvDropzone';
 
+import CsvDropzone from '../CsvDropzone';
 import {Loading} from './Loading';
 import {RequestResponse} from './RequestResponse';
 
 import {Close} from '../../assets/svgCode/Close';
 import {Clear} from '../../assets/svgCode/Clear';
 
+
 export function Modal({handleClose}) {
-	const [isHovered, setIsHovered] = useState(false);
-	
-	const [file, setFile] = useState(null);
-	const [fileName, setFileName] = useState('');
-	const [name, setName] = useState('');
-	const handleClear = () => {
-		setName('');
-	};
-	
 	const [isTransition, setIsTransition] = useState(false);
 	useEffect(() => {
 		const timer = setTimeout(() => {
@@ -37,21 +29,27 @@ export function Modal({handleClose}) {
 		}, 300);
 	};
 	
+	const [isHovered, setIsHovered] = useState(false);
+	
+	const [name, setName] = useState('');
+	const [file, setFile] = useState(null);
+	const [fileName, setFileName] = useState('');
+
+	const handleClear = () => setName('');
+	
 	const [error, setError] = useState(false);
 	const [errorMsg, setErrorMsg] = useState('');
 	const [loading, setLoading] = useState(false);
 	
-	const onChangeError = (error, errorMsg) => {
-		setTimeout(() => {
-			setError(error);
-			setErrorMsg(errorMsg);
-		}, 400);
-	};
+	const onChangeError = useCallback( (error, errorMsg) => {
+		setError(error);
+		setErrorMsg(errorMsg);
+	}, []);
 	
-	const handleFileUpload = (file, fileName) => {
+	const handleFileUpload = useCallback((file, fileName) => {
 		setFile(file);
 		setFileName(fileName);
-	};
+	}, []);
 	
 	const [isRequestResponse, setIsRequestResponse] = useState(false);
 	const [dataFile, setDataFile] = useState(null);
@@ -73,14 +71,29 @@ export function Modal({handleClose}) {
 			setLoading(false);
 		}
 	};
-
+	
+	function GenerateContent({modalTitle, content}) {
+		return(
+			<div className={classNames('modal_content', {'modal_content_response': isRequestResponse})}>
+				<div className='modal_content_header'>
+					<p className='modal_title'>{modalTitle}</p>
+				</div>
+				{content}
+			</div>
+		);
+	}
 	
 	function content(){
 		if(loading){
-			return <Loading/>;
+			return <GenerateContent modalTitle='Загрузка файла' content={<Loading/>}/>;
 		}
 		if(isRequestResponse){
-			return <RequestResponse dataFile={dataFile} filename={fileName} errorMsg={errorMsg}/>
+			return (
+				<GenerateContent
+					modalTitle={!error ? 'Файл успешно загружен' : 'Ошибка в загрузке файла'}
+					content={<RequestResponse dataFile={dataFile} filename={fileName} errorMsg={errorMsg}/>}
+				/>
+			);
 		}
 		
 		return(
@@ -88,7 +101,7 @@ export function Modal({handleClose}) {
 				<div className='modal_content'>
 					<div className='modal_content_header'>
 						<p className='modal_title'>Загрузочное окно</p>
-						{errorMsg ?
+						{error ?
 							<div className='modal_description_container'>
 								<p className='modal_title_error'>Ошибка при добавлении:</p>
 								<p className='modal_description'>{errorMsg}</p>
@@ -122,7 +135,7 @@ export function Modal({handleClose}) {
 								<Clear/>
 							</button>
 						</div>
-						<CsvDropzone onChangeError={onChangeError} onFileUpload={handleFileUpload}/>
+						<CsvDropzone onChangeError={onChangeError} handleFileUpload={handleFileUpload}/>
 					</div>
 				</div>
 				<div className='modal_footer'>
@@ -142,18 +155,19 @@ export function Modal({handleClose}) {
 	
 	return (
 		<div  className={classNames(
-			'blur',
+			'background_blur',
 			{'transition': isTransition})}
 		>
 			<div className={classNames(
 				'modal',
 				{'modal_request': isRequestResponse})}
 			>
-				<div className={classNames(
-					'modal_container',
-					{'modal_container_success': !error && !loading},
-					{'modal_container_error': error})}
-				>
+				<div className='modal_container'>
+					<div className='modal_background'>
+						<div className={`background_color_default ${error && 'active_default'}`}></div>
+						<div className={`background_color_error ${error && 'active_error'}`}></div>
+						<div className={`background_color_success ${isRequestResponse && !error && !loading && 'active_success'}`}></div>
+					</div>
 					<div className='modal_header'>
 						<button className='btn_close' onClick={closeModal}><Close/></button>
 					</div>

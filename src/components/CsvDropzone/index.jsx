@@ -10,9 +10,9 @@ import File_2 from './assets/file_2.svg';
 const initial = {
 	name: '',
 	size: 0,
-	date: ''
+	lastModified: ''
 }
-const CsvDropzone = ({onChangeError, onFileUpload }) => {
+const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 	const [offset, setOffset] = useState(0);
 	const [direction, setDirection] = useState(1);
 	useEffect(() => {
@@ -58,10 +58,10 @@ const CsvDropzone = ({onChangeError, onFileUpload }) => {
 					setFileInformation({
 						name: file.name,
 						size: file.size,
-						date: new Date(file.lastModified).toLocaleDateString("en-US")
+						lastModified: new Date(file.lastModified).toLocaleDateString("en-US")
 					});
 					setNextStep(true);
-					onFileUpload(file, file.name);
+					handleFileUpload(file, file.name);
 				}
 			});
 		}
@@ -116,7 +116,7 @@ const CsvDropzone = ({onChangeError, onFileUpload }) => {
 						</div>
 						<div className='load_file_block_description_container_'>
 							<p className='load_file_block_description_title'>Дата изменения:</p>
-							<p className='load_file_block_description_value'>{fileInformation.date}</p>
+							<p className='load_file_block_description_value'>{fileInformation.lastModified}</p>
 						</div>
 					</div>
 				</div>
