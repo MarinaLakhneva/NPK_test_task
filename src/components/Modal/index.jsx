@@ -6,8 +6,8 @@ import {uploadFile} from '../../app/api/fileUpload';
 
 import CsvDropzone from '../CsvDropzone';
 
-import Loading from './Loading';
-import RequestResponse from './RequestResponse';
+import Loading from '../Loading';
+import RequestResponse from '../RequestResponse';
 
 import {Close} from '../../assets/svgCode/Close';
 import {Clear} from '../../assets/svgCode/Clear';
