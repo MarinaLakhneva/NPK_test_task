@@ -24,5 +24,3 @@ export const uploadFile = async (file, name) => {
 		return { status, message };
 	}
 };
-
-

@@ -12,7 +12,8 @@ const initial = {
 	size: 0,
 	lastModified: ''
 }
-const CsvDropzone = ({onChangeError, handleFileUpload }) => {
+
+export const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 	const [offset, setOffset] = useState(0);
 	const [direction, setDirection] = useState(1);
 	useEffect(() => {
@@ -126,5 +127,3 @@ const CsvDropzone = ({onChangeError, handleFileUpload }) => {
 		</div>
 	);
 };
-
-export default CsvDropzone;
